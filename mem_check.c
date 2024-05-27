@@ -15,7 +15,7 @@ int check_for_change(hash_node** hash_table, uint32_t* mem_block, uint32_t mem_b
     int count_changes = 0;
     for(index; index < mem_block_size; index++){
         assert(error_status == 0);
-        if(mem_block[index] != 0 && mem_block[index] != get_val(hash_table, index, &error_status)){
+        if(mem_block[index] != get_val(hash_table, index, &error_status)){
             //change
             transaction_buffer[count_changes].epoch_time = time(NULL);
             transaction_buffer[count_changes].addr = mem_block_start_index + index;
@@ -25,6 +25,7 @@ int check_for_change(hash_node** hash_table, uint32_t* mem_block, uint32_t mem_b
             error_status = 0;
             count_changes++;
         }
+        error_status = 0;
     }
     return count_changes;
 }
@@ -45,7 +46,8 @@ int setup_state(hash_node** hash_table, uint32_t* mem_root){
         mem_transaction* tbuffer = malloc(sizeof(mem_transaction));
         read_transaction(tbuffer, buffer);
         printf("FOUND_IN_TRANSACTION_LIST: %lu, %u, %u, %u\n", tbuffer->epoch_time, tbuffer->addr, tbuffer->prev, tbuffer->next);
-        set_val(hash_table, tbuffer->addr, tbuffer->next, &error);
+        int x = set_val(hash_table, tbuffer->addr, tbuffer->next, &error);
+        mem_root[tbuffer->addr] = tbuffer->next;
         free(tbuffer);
         num_vals++;
     }
@@ -54,8 +56,8 @@ int setup_state(hash_node** hash_table, uint32_t* mem_root){
 
 int main(void* args){
     //printf("helloworld\n");
-    //alloc 1gig
-    const int SIZE = 250000;
+    //alloc 400MB
+    const int SIZE = 100000000;
     uint32_t* mem_root = calloc(SIZE, sizeof(uint32_t));
     if (mem_root == NULL){
         printf("Alloc failed\n");
@@ -63,11 +65,11 @@ int main(void* args){
     }
 
     hash_node** hash_table = make_table();
-    mem_transaction* recent_transactions = calloc(SIZE, sizeof(mem_transaction)* 10);;
+    mem_transaction* recent_transactions = calloc(100, sizeof(mem_transaction));;
     int num_vals = setup_state(hash_table, mem_root);
     printf("parsed %d transactions\n", num_vals);
     // begin testing
-    uint32_t* mem_read = mem_root;
+    uint32_t* mem_read = mem_root;    
     while(1){
         int error = 0;
         int num_changes = check_for_change(hash_table, mem_read, SIZE, 0, recent_transactions);

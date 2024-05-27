@@ -20,7 +20,7 @@ hash_node** make_table(){
 }
 
 
-uint32_t hash(uint32_t key){
+int hash(uint32_t key){
     return key % HASH_TABLE_SIZE;
 }
 
@@ -42,12 +42,12 @@ hash_node* get_node(hash_node** hash_table, uint32_t key){
 uint32_t get_val(hash_node** hash_table, uint32_t key, int* error_status){
     *error_status = 1; 
     hash_node* node = get_node(hash_table, key);
-    if (node == NULL) return -1;
+    if (node == NULL) return 0;
     *error_status = 0;
     return node->val;
 }
 
-uint32_t set_val(hash_node** hash_table, uint32_t key, uint32_t val, int* error_status){
+int set_val(hash_node** hash_table, uint32_t key, uint32_t val, int* error_status){
     *error_status = 1;
     //replacing value in existing node
     hash_node* new_node = get_node(hash_table, key);
