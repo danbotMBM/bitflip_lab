@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "mem_utils.h"
 
 const uint32_t HASH_TABLE_SIZE= 10;
 
@@ -41,20 +40,20 @@ hash_node* get_node(hash_node** hash_table, uint32_t key){
 }
 
 uint32_t get_val(hash_node** hash_table, uint32_t key, int* error_status){
-    *error_status = TRUE; 
+    *error_status = 1; 
     hash_node* node = get_node(hash_table, key);
     if (node == NULL) return -1;
-    *error_status = FALSE;
+    *error_status = 0;
     return node->val;
 }
 
 uint32_t set_val(hash_node** hash_table, uint32_t key, uint32_t val, int* error_status){
-    *error_status = TRUE;
+    *error_status = 1;
     //replacing value in existing node
     hash_node* new_node = get_node(hash_table, key);
     if (get_node(hash_table, key) != NULL){
         new_node->val = val;
-        *error_status = FALSE;
+        *error_status = 0;
         return hash(key);
     }
     //malloc new node
@@ -73,7 +72,7 @@ uint32_t set_val(hash_node** hash_table, uint32_t key, uint32_t val, int* error_
         new_node->next = hash_table[hash(key)];
         hash_table[hash(key)] = new_node;
     }
-    *error_status = FALSE;
+    *error_status = 0;
     return hash(key);
 }
 
@@ -82,7 +81,7 @@ void print_node(hash_node* node){
 }
 
 uint32_t remove_key(hash_node** hash_table, uint32_t key, int* error_status){
-    *error_status = TRUE;
+    *error_status = 1;
     hash_node* to_remove = get_node(hash_table, key);
     // not actually present
     if (to_remove == NULL) return -1;
@@ -102,7 +101,7 @@ uint32_t remove_key(hash_node** hash_table, uint32_t key, int* error_status){
     }
     uint32_t val = to_remove->val;
     free(to_remove);
-    *error_status = FALSE;
+    *error_status = 0;
     return val;
 }
 
