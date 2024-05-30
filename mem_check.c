@@ -57,7 +57,7 @@ int setup_state(hash_node** hash_table, uint32_t* mem_root){
 int main(void* args){
     //printf("helloworld\n");
     //alloc 400MB
-    const int SIZE = 100000000;
+    const uint32_t SIZE = 3500000000u;
     uint32_t* mem_root = calloc(SIZE, sizeof(uint32_t));
     if (mem_root == NULL){
         printf("Alloc failed\n");
