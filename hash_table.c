@@ -40,7 +40,7 @@ hash_node* get_node(hash_node** hash_table, uint64_t key){
     }
 }
 
-uint32_t get_val(hash_node** hash_table, uint32_t key, int* error_status){
+uint32_t get_val(hash_node** hash_table, uint64_t key, int* error_status){
     *error_status = 1; 
     hash_node* node = get_node(hash_table, key);
     if (node == NULL) return 0;
@@ -48,7 +48,7 @@ uint32_t get_val(hash_node** hash_table, uint32_t key, int* error_status){
     return node->val;
 }
 
-int set_val(hash_node** hash_table, uint32_t key, uint32_t val, int* error_status){
+int set_val(hash_node** hash_table, uint64_t key, uint32_t val, int* error_status){
     *error_status = 1;
     //replacing value in existing node
     hash_node* new_node = get_node(hash_table, key);

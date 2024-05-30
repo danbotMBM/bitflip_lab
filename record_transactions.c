@@ -16,7 +16,7 @@ void write_transaction(char* file_name, mem_transaction t){
 mem_transaction* read_transaction(mem_transaction* buffer, char* line){
     //TODO currently do not check for invalid inputs
     buffer->epoch_time = strtoul(strtok(line, " "), NULL, 10);
-    buffer->addr = (uint32_t)strtoull(strtok(NULL," "), NULL, 10);
+    buffer->addr = (uint64_t)strtoull(strtok(NULL," "), NULL, 10);
     buffer->prev = (uint32_t)strtoul(strtok(NULL," "), NULL, 10);
     buffer->next = (uint32_t)strtoul(strtok(NULL," "), NULL, 10);
     return buffer;
