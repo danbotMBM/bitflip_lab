@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <inttypes.h>
 
 const uint32_t HASH_TABLE_SIZE= 10;
 
 struct hash_node {
     struct hash_node* next;
-    uint32_t key;
+    uint64_t key;
     uint32_t val; 
 };
 typedef struct hash_node hash_node;
@@ -20,11 +21,11 @@ hash_node** make_table(){
 }
 
 
-int hash(uint32_t key){
+int hash(uint64_t key){
     return key % HASH_TABLE_SIZE;
 }
 
-hash_node* get_node(hash_node** hash_table, uint32_t key){
+hash_node* get_node(hash_node** hash_table, uint64_t key){
     hash_node* node = hash_table[hash(key)];
     
     if (node == NULL) return NULL;
@@ -77,10 +78,10 @@ int set_val(hash_node** hash_table, uint32_t key, uint32_t val, int* error_statu
 }
 
 void print_node(hash_node* node){
-    printf("%p, %u, %u, %p\n", node, node->key, node->val, node->next);
+    printf("%p, %lu, %u, %p\n", node, node->key, node->val, node->next);
 }
 
-uint32_t remove_key(hash_node** hash_table, uint32_t key, int* error_status){
+uint32_t remove_key(hash_node** hash_table, uint64_t key, int* error_status){
     *error_status = 1;
     hash_node* to_remove = get_node(hash_table, key);
     // not actually present
@@ -111,7 +112,7 @@ void print_hash_table(hash_node** hash_table){
         hash_node* node = hash_table[i];
         printf("%d: ", i);
         while(node != NULL){
-            printf("(%u, %u)->", node->key, node->val);
+            printf("(%lu, %u)->", node->key, node->val);
             node = node->next;
         }
         printf("\n");
