@@ -1,4 +1,4 @@
-*.txt
+*transactions.txt
 *.o
 .vscode/
 *.pickle
