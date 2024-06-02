@@ -10,7 +10,7 @@
 #include <sys/resource.h>
 #include <sys/time.h>
 
-char* FILENAME = "transactions.txt";
+char* FILENAME = "/home/danbot/dev/bitflip_lab/transactions.txt";
 
 int check_for_change(hash_node** hash_table, uint32_t* mem_block, uint64_t mem_block_size, uint64_t mem_block_start_index, mem_transaction* transaction_buffer){
     uint64_t index = 0;
@@ -41,7 +41,7 @@ int setup_state(hash_node** hash_table, uint32_t* mem_root){
         perror("Error opening file");
         return 1;
     }
-    char buffer[100]; // Buffer to store the read data
+    char buffer[300]; // Buffer to store the read data
     // Read data from the file using fgets
     int num_vals = 0;
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
@@ -65,8 +65,8 @@ int main(void* args){
         return 1;
     }
     //printf("helloworld\n");
-    //alloc 400MB
-    const uint64_t SIZE = 6500000000lu;
+    //alloc 10G
+    const uint64_t SIZE = 2500000000lu;
     struct rlimit rl;
     if (getrlimit(RLIMIT_MEMLOCK, &rl) == 0) {
         printf("Current RLIMIT_MEMLOCK: soft limit = %ld, hard limit = %ld\n", rl.rlim_cur, rl.rlim_max);
@@ -95,17 +95,21 @@ int main(void* args){
     // begin testing
     uint32_t* mem_read = mem_root;    
     uint32_t* lol = mem_read + SIZE-2;
+    time_t prevtime = time(NULL);
     *lol = 101;
     while(1){
         int error = 0;
         int num_changes = check_for_change(hash_table, mem_read, SIZE, 0, recent_transactions);
-        //printf("%d\n", num_changes);
+        printf("%d changes from %lu to %lu\n", num_changes, prevtime, time(NULL));
+        prevtime = time(NULL);
         for (int i = 0; i < num_changes; i++){
             printf("Detected change: %lu, %lu, %u, %u\n", recent_transactions[i].epoch_time, recent_transactions[i].addr, recent_transactions[i].prev, recent_transactions[i].next);
             set_val(hash_table, recent_transactions[i].addr, recent_transactions[i].next, &error);
+            print_hash_table(hash_table);
             write_transaction(FILENAME, recent_transactions[i]);
         }
-        sleep(60);
+        fflush(NULL);
+        sleep(6000);
     }
     munlockall();
     free(mem_root);
