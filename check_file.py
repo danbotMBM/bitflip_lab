@@ -36,7 +36,7 @@ while True:
     diff_count = calc_diff(difference)
     print(diff_count)
     if diff_count > 0:
-        cp_transactions()
         email_sender.send_email("File changed by " + str(diff_count)+ " lines", create_body(diff_count, difference))
+        cp_transactions()
         print("copied and sent")
     time.sleep(60)

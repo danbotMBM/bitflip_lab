@@ -1,0 +1,11 @@
+[Unit]
+Description=Bit Flip Auto Emailer
+[Service]
+Type=simple
+User=danbot
+ExecStart=/usr/bin/python3 /home/danbot/dev/bitflip_lab/check_file.py
+Restart=on-failure
+RestartSec=10
+KillMode=process
+[Install]
+WantedBy=multi-user.target
