@@ -1,0 +1,10 @@
+[Unit]
+Description=Bit Flip Auto Runner
+[Service]
+Type=simple
+ExecStart=/home/danbot/dev/bitflip_lab/running/bitflip.o
+Restart=on-failure
+RestartSec=10
+KillMode=process
+[Install]
+WantedBy=multi-user.target
