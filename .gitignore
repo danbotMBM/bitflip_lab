@@ -1,3 +1,7 @@
 *.txt
 *.o
 .vscode/
+*.pickle
+credentials.json
+*.token
+__pycache__
