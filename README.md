@@ -17,7 +17,7 @@ In reality, good programs check data at many steps of the process, ensuring safe
 
 ## __I'm curious how common a RAM bit flip is in the average experience of an average user.__
 
-The inspiration for this investigation came from [this event](https://www.youtube.com/embed/bhBf5crp0i8?si=S_n_JAchit8QArQh&amp;start=8) in 2013:
+The inspiration for this investigation came from this event in 2013:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bhBf5crp0i8?si=S_n_JAchit8QArQh&amp;start=8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -38,13 +38,14 @@ This great [Veritasium video](https://youtu.be/AaZ_RSt0KP8?si=ZsEFT5lE5HrtOSyK) 
 
 With a quick google search you find the ever trustworthy AI generated response.
 ![Google Search for bit flips](image.png)
+
 Thats crazy, if that number is correct then every device almost always has a bit flip every week. (Because most consumer devices have more than 4GB of RAM)
 
 Digging deeper I found a [competing google paper](https://www.cs.toronto.edu/~bianca/papers/sigmetrics09.pdf). Basically, it says that bit flips happen almost never, and, if they do, it's likely due to a hardware problem that will lead to many more bit flips on that specific RAM stick. Additionally, a blog post on [robertelkder.org](https://blog.robertelder.org/causes-of-bit-flips-in-computer-memory/#:~:text=If%20you%20do%20a%20search,bit%20flip%20every%20three%20days%22.) claims that the situation has to be perfect for cosmic rays to intervene. Robert has lots of pictures so it seems trustworthly. But I have genuinely no clue if he is right.
 
 ## So I decided to test it myself!
 
-![Basement lab](lab.jpg)
+<img src="lab.jpg" alt="drawing" heigth="300px"/>
 
 Basically, I've set up a test bench to just allocate 10(ish) Gigs of RAM, set it all to 00000000 and check every once in a while to see if anything changed. Its a super simple setup. But I wanted to just sit a wait and see if I could get any __alpha particle__ related flips. Feel free to check out my code on github [github.com/danbotMBM/bitflip_lab](https://github.com/danbotMBM/bitflip_lab/blob/master/mem_check.c).
 
