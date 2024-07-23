@@ -18,9 +18,9 @@ In reality, good programs check data at many steps of the process, ensuring safe
 ## __I'm curious how common a RAM bit flip is in the average experience of an average user.__
 
 The inspiration for this investigation came from [this event](https://www.youtube.com/embed/bhBf5crp0i8?si=S_n_JAchit8QArQh&amp;start=8) in 2013:
-```
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bhBf5crp0i8?si=S_n_JAchit8QArQh&amp;start=8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-```
+
 A moment in [SMB64]() [speedrunning]() where mario seemingly teleports for no reason, saving time in the race. The speedrunning community ended up [recreating this exact](https://youtu.be/X5cwuYFUUAY) moment by manually flipping a single bit from C5 -> C4.
 ```
 Decimal | HEX
